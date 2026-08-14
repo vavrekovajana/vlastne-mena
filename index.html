@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DámTo! – Vlastné mená</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#eef7ff,#fff5df);
+  color:#17365d;
+  min-height:100vh;
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:7px;
+}
+
+.logo{
+  text-align:center;
+  font-size:36px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#ff9f1c;
+}
+
+.slogan{
+  text-align:center;
+  color:#718096;
+  font-weight:700;
+  font-size:13px;
+  margin:3px 0 8px;
+}
+
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:14px;
+  box-shadow:0 12px 35px rgba(23,54,93,.12);
+}
+
+.center{
+  text-align:center;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.levels{
+  display:grid;
+  gap:7px;
+  margin:12px 0;
+}
+
+button{
+  border:0;
+  border-radius:15px;
+  padding:10px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+
+.level{
+  background:#eef6ff;
+  color:#17365d;
+  border:2px solid transparent;
+}
+
+.level.active{
+  background:#fff7e8;
+  border-color:#ff9f1c;
+}
+
+.primary{
+  width:100%;
+  background:#2f80ed;
+  color:#fff;
+}
+
+.secondary{
+  background:#eef6ff;
+  color:#17365d;
+}
+
+.mistakes{
+  width:100%;
+  margin-top:7px;
+  background:#fff4df;
+  color:#805400;
+}
+
+.top,
+.stats{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:6px;
+}
+
+.badge{
+  background:#fff4df;
+  padding:7px 10px;
+  border-radius:30px;
+  font-weight:800;
+}
+
+.progress{
+  height:8px;
+  background:#e9eff5;
+  border-radius:20px;
+  overflow:hidden;
+  margin:6px 0;
+}
+
+.bar{
+  height:100%;
+  background:#ff9f1c;
+  width:0;
+}
+
+.stats{
+  font-size:13px;
+  color:#65758b;
+  font-weight:700;
+}
+
+.instruction{
+  text-align:center;
+  color:#65758b;
+  font-weight:800;
+  font-size:16px;
+  margin-top:7px;
+}
+
+.question{
+  text-align:center;
+  font-size:26px;
+  font-weight:900;
+  margin:8px 0;
+  line-height:1.25;
+}
+
+.answers{
+  display:grid;
+  gap:6px;
+}
+
+.answer{
+  background:#fff;
+  border:2px solid #dce7f2;
+  color:#17365d;
+  padding:9px;
+  line-height:1.3;
+}
+
+.answer:hover{
+  border-color:#2f80ed;
+  background:#f5f9ff;
+}
+
+.answer.keyboardSelected{
+  border-color:#2f80ed;
+  background:#eaf3ff;
+  box-shadow:0 0 0 2px rgba(47,128,237,.12);
+}
+
+.answer:disabled{
+  cursor:default;
+}
+
+.feedback{
+  margin-top:6px;
+  padding:7px 9px;
+  border-radius:12px;
+  font-size:14px;
+}
+
+.good{
+  background:#e9f8ef;
+  color:#176b46;
+}
+
+.bad{
+  background:#fff0f2;
+  color:#9f3047;
+}
+
+#nextButton{
+  margin-top:6px;
+  padding:8px;
+}
+
+.score{
+  font-size:48px;
+  font-weight:900;
+}
+
+.footer{
+  text-align:center;
+  color:#8795a7;
+  font-size:12px;
+  margin-top:5px;
+}
+
+@media(max-height:700px){
+
+  .logo{
+    font-size:29px;
+  }
+
+  .slogan{
+    font-size:11px;
+    margin:1px 0 4px;
+  }
+
+  .card{
+    padding:9px;
+  }
+
+  .instruction{
+    font-size:14px;
+    margin-top:3px;
+  }
+
+  .question{
+    font-size:21px;
+    margin:4px 0;
+  }
+
+  .answer{
+    padding:7px;
+    font-size:13px;
+  }
+
+  .feedback{
+    font-size:12px;
+    padding:5px;
+  }
+
+  .top button,
+  .badge{
+    font-size:12px;
+    padding:6px;
+  }
+
+  .progress{
+    height:6px;
+  }
+}
+
+@media(max-width:520px){
+
+  .wrap{
+    padding:6px;
+  }
+
+  .logo{
+    font-size:33px;
+  }
+
+  .question{
+    font-size:23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="logo">
+  Dám<span>To!</span>
+</div>
+
+<div class="slogan">
+  Každý deň o level vyššie.
+</div>
+
+
+<!-- DOMOV -->
+
+<section
+  id="home"
+  class="card center"
+>
+
+  <div style="font-size:40px">
+    👤
+  </div>
+
+  <h1 style="margin:5px 0">
+    Vlastné mená
+  </h1>
+
+  <p style="margin:5px 0">
+    Veľké písmeno v menách ľudí, zvierat a miest.
+  </p>
+
+  <div class="levels">
+
+    <button
+      class="level active"
+      data-level="1"
+    >
+      ⭐ Skúšam
+      <br>
+      <small>
+        Ktoré slovo je vlastné meno?
+      </small>
+    </button>
+
+    <button
+      class="level"
+      data-level="2"
+    >
+      ⭐⭐ Už mi to ide
+      <br>
+      <small>
+        Vyber správny zápis
+      </small>
+    </button>
+
+    <button
+      class="level"
+      data-level="3"
+    >
+      ⭐⭐⭐ DámTo!
+      <br>
+      <small>
+        Nájdi správne napísanú vetu
+      </small>
+    </button>
+
+  </div>
+
+  <button
+    id="startBtn"
+    class="primary"
+  >
+    ▶ Začať tréning
+  </button>
+
+  <button
+    id="mistakesBtn"
+    class="mistakes"
+  >
+    🎯 Precvičiť moje chyby
+    <span id="mistakeCount"></span>
+  </button>
+
+</section>
+
+
+<!-- HRA -->
+
+<section
+  id="game"
+  class="card hidden"
+>
+
+  <div class="top">
+
+    <button
+      id="backBtn"
+      class="secondary"
+    >
+      ← Späť
+    </button>
+
+    <div
+      id="levelBadge"
+      class="badge"
+    ></div>
+
+  </div>
+
+  <div class="progress">
+    <div
+      id="bar"
+      class="bar"
+    ></div>
+  </div>
+
+  <div class="stats">
+
+    <span id="counter"></span>
+
+    <span>
+      🏆
+      <span id="points">0</span>
+    </span>
+
+  </div>
+
+  <div
+    id="instruction"
+    class="instruction"
+  ></div>
+
+  <div
+    id="question"
+    class="question"
+  ></div>
+
+  <div
+    id="answers"
+    class="answers"
+  ></div>
+
+  <div id="feedback"></div>
+
+  <button
+    id="nextButton"
+    class="primary hidden"
+  >
+    Ďalej ➜
+  </button>
+
+</section>
+
+
+<!-- KONIEC -->
+
+<section
+  id="finish"
+  class="card center hidden"
+>
+
+  <div style="font-size:50px">
+    🏆
+  </div>
+
+  <h1>
+    Tréning hotový!
+  </h1>
+
+  <div
+    id="finalScore"
+    class="score"
+  ></div>
+
+  <p id="finalMessage"></p>
+
+  <button
+    id="againBtn"
+    class="primary"
+  >
+    🔄 Nový náhodný mix
+  </button>
+
+  <br><br>
+
+  <button
+    id="homeBtn"
+    class="secondary"
+  >
+    ⭐ Vybrať level
+  </button>
+
+</section>
+
+<div class="footer">
+  DámTo! • Vlastné mená
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   LEVEL 1
+===================================================== */
+
+const level1=[
+
+{
+id:"l1-1",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Martin",
+o:["Martin","chlapec","kamarát"]
+},
+
+{
+id:"l1-2",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Bratislava",
+o:["Bratislava","mesto","ulica"]
+},
+
+{
+id:"l1-3",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Dunaj",
+o:["Dunaj","rieka","jazero"]
+},
+
+{
+id:"l1-4",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Reks",
+o:["Reks","pes","zviera"]
+},
+
+{
+id:"l1-5",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Tatry",
+o:["Tatry","pohorie","vrch"]
+},
+
+{
+id:"l1-6",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Zuzana",
+o:["Zuzana","dievča","žiačka"]
+},
+
+{
+id:"l1-7",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Murko",
+o:["Murko","mačka","zviera"]
+},
+
+{
+id:"l1-8",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Košice",
+o:["Košice","mesto","dedina"]
+},
+
+{
+id:"l1-9",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Peter",
+o:["Peter","chlapec","brat"]
+},
+
+{
+id:"l1-10",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Hron",
+o:["Hron","rieka","potok"]
+},
+
+{
+id:"l1-11",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Lucia",
+o:["Lucia","dievča","sestra"]
+},
+
+{
+id:"l1-12",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Prešov",
+o:["Prešov","mesto","námestie"]
+},
+
+{
+id:"l1-13",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Azor",
+o:["Azor","pes","šteniatko"]
+},
+
+{
+id:"l1-14",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Váh",
+o:["Váh","rieka","voda"]
+},
+
+{
+id:"l1-15",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Nitra",
+o:["Nitra","mesto","obec"]
+},
+
+{
+id:"l1-16",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Mária",
+o:["Mária","mama","učiteľka"]
+},
+
+{
+id:"l1-17",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Fido",
+o:["Fido","pes","kamarát"]
+},
+
+{
+id:"l1-18",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Žilina",
+o:["Žilina","mesto","dedina"]
+},
+
+{
+id:"l1-19",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Adam",
+o:["Adam","chlapec","žiak"]
+},
+
+{
+id:"l1-20",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Slovensko",
+o:["Slovensko","krajina","štát"]
+},
+
+{
+id:"l1-21",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Eva",
+o:["Eva","dievča","kamarátka"]
+},
+
+{
+id:"l1-22",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Zvolen",
+o:["Zvolen","mesto","hrad"]
+},
+
+{
+id:"l1-23",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Sofia",
+o:["Sofia","dievča","žiačka"]
+},
+
+{
+id:"l1-24",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Revúca",
+o:["Revúca","mesto","rieka"]
+},
+
+{
+id:"l1-25",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Michal",
+o:["Michal","chlapec","spolužiak"]
+},
+
+{
+id:"l1-26",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Bela",
+o:["Bela","mačka","zviera"]
+},
+
+{
+id:"l1-27",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Levice",
+o:["Levice","mesto","dedina"]
+},
+
+{
+id:"l1-28",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Tomáš",
+o:["Tomáš","chlapec","kamarát"]
+},
+
+{
+id:"l1-29",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Gerlach",
+o:["Gerlach","vrch","pohorie"]
+},
+
+{
+id:"l1-30",
+i:"Ktoré slovo je vlastné meno?",
+q:"",
+c:"Katka",
+o:["Katka","dievča","sestra"]
+}
+
+];
+
+
+/* =====================================================
+   LEVEL 2
+===================================================== */
+
+const pairs=[
+
+["Jana","jana"],
+["Peter","peter"],
+["Lucia","lucia"],
+["Tomáš","tomáš"],
+["Mária","mária"],
+
+["Bratislava","bratislava"],
+["Košice","košice"],
+["Prešov","prešov"],
+["Nitra","nitra"],
+["Žilina","žilina"],
+
+["Dunaj","dunaj"],
+["Hron","hron"],
+["Váh","váh"],
+["Tatry","tatry"],
+["Gerlach","gerlach"],
+
+["Reks","reks"],
+["Murko","murko"],
+["Azor","azor"],
+["Bela","bela"],
+["Fido","fido"],
+
+["Slovensko","slovensko"],
+["Európa","európa"],
+["Revúca","revúca"],
+["Levice","levice"],
+["Zvolen","zvolen"],
+
+["Adam","adam"],
+["Eva","eva"],
+["Michal","michal"],
+["Katka","katka"],
+["Sofia","sofia"]
+
+];
+
+
+const level2=
+pairs.map(
+  (pair,index)=>({
+
+    id:
+      "l2-"+index,
+
+    i:
+      "Vyber správne napísané vlastné meno.",
+
+    q:"",
+
+    c:
+      pair[0],
+
+    o:[
+      pair[0],
+      pair[1]
+    ]
+
+  })
+);
+
+
+/* =====================================================
+   LEVEL 3
+===================================================== */
+
+const level3=[
+
+{
+id:"l3-1",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Jana býva v Košiciach.",
+o:[
+"jana býva v Košiciach.",
+"Jana býva v košiciach.",
+"Jana býva v Košiciach."
+]
+},
+
+{
+id:"l3-2",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Peter má psa Reksa.",
+o:[
+"Peter má psa reksa.",
+"peter má psa Reksa.",
+"Peter má psa Reksa."
+]
+},
+
+{
+id:"l3-3",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"V lete sme boli v Tatrách.",
+o:[
+"V lete sme boli v tatrách.",
+"v lete sme boli v Tatrách.",
+"V lete sme boli v Tatrách."
+]
+},
+
+{
+id:"l3-4",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Dunaj preteká Bratislavou.",
+o:[
+"dunaj preteká Bratislavou.",
+"Dunaj preteká bratislavou.",
+"Dunaj preteká Bratislavou."
+]
+},
+
+{
+id:"l3-5",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Lucia má mačku Murku.",
+o:[
+"lucia má mačku Murku.",
+"Lucia má mačku murku.",
+"Lucia má mačku Murku."
+]
+},
+
+{
+id:"l3-6",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Tomáš cestuje do Prešova.",
+o:[
+"tomáš cestuje do Prešova.",
+"Tomáš cestuje do prešova.",
+"Tomáš cestuje do Prešova."
+]
+},
+
+{
+id:"l3-7",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Slovensko leží v Európe.",
+o:[
+"slovensko leží v Európe.",
+"Slovensko leží v európe.",
+"Slovensko leží v Európe."
+]
+},
+
+{
+id:"l3-8",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Mária navštívila Nitru.",
+o:[
+"mária navštívila Nitru.",
+"Mária navštívila nitru.",
+"Mária navštívila Nitru."
+]
+},
+
+{
+id:"l3-9",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Hron tečie cez Zvolen.",
+o:[
+"hron tečie cez Zvolen.",
+"Hron tečie cez zvolen.",
+"Hron tečie cez Zvolen."
+]
+},
+
+{
+id:"l3-10",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Adam býva v Žiline.",
+o:[
+"adam býva v Žiline.",
+"Adam býva v žiline.",
+"Adam býva v Žiline."
+]
+},
+
+{
+id:"l3-11",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Eva má psa Azora.",
+o:[
+"eva má psa Azora.",
+"Eva má psa azora.",
+"Eva má psa Azora."
+]
+},
+
+{
+id:"l3-12",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Váh je slovenská rieka.",
+o:[
+"váh je slovenská rieka.",
+"Váh je Slovenská rieka.",
+"Váh je slovenská rieka."
+]
+},
+
+{
+id:"l3-13",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Katka cestuje do Levíc.",
+o:[
+"katka cestuje do Levíc.",
+"Katka cestuje do levíc.",
+"Katka cestuje do Levíc."
+]
+},
+
+{
+id:"l3-14",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Sofia žije na Slovensku.",
+o:[
+"sofia žije na Slovensku.",
+"Sofia žije na slovensku.",
+"Sofia žije na Slovensku."
+]
+},
+
+{
+id:"l3-15",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Michal navštívil Revúcu.",
+o:[
+"michal navštívil Revúcu.",
+"Michal navštívil revúcu.",
+"Michal navštívil Revúcu."
+]
+},
+
+{
+id:"l3-16",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Reks behá po záhrade.",
+o:[
+"reks behá po záhrade.",
+"Reks behá po Záhrade.",
+"Reks behá po záhrade."
+]
+},
+
+{
+id:"l3-17",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Košice sú veľké mesto.",
+o:[
+"košice sú veľké mesto.",
+"Košice sú Veľké mesto.",
+"Košice sú veľké mesto."
+]
+},
+
+{
+id:"l3-18",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Tatry sú naše najvyššie pohorie.",
+o:[
+"tatry sú naše najvyššie pohorie.",
+"Tatry sú naše Najvyššie pohorie.",
+"Tatry sú naše najvyššie pohorie."
+]
+},
+
+{
+id:"l3-19",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Peter a Lucia idú do školy.",
+o:[
+"peter a Lucia idú do školy.",
+"Peter a lucia idú do školy.",
+"Peter a Lucia idú do školy."
+]
+},
+
+{
+id:"l3-20",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Murko spí na kresle.",
+o:[
+"murko spí na kresle.",
+"Murko spí na Kresle.",
+"Murko spí na kresle."
+]
+},
+
+{
+id:"l3-21",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Nitra leží na Slovensku.",
+o:[
+"nitra leží na Slovensku.",
+"Nitra leží na slovensku.",
+"Nitra leží na Slovensku."
+]
+},
+
+{
+id:"l3-22",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Tomáš má kamaráta Petra.",
+o:[
+"tomáš má kamaráta Petra.",
+"Tomáš má kamaráta petra.",
+"Tomáš má kamaráta Petra."
+]
+},
+
+{
+id:"l3-23",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Bratislava je hlavné mesto Slovenska.",
+o:[
+"bratislava je hlavné mesto Slovenska.",
+"Bratislava je hlavné mesto slovenska.",
+"Bratislava je hlavné mesto Slovenska."
+]
+},
+
+{
+id:"l3-24",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"V Zvolene býva Mária.",
+o:[
+"V zvolene býva Mária.",
+"V Zvolene býva mária.",
+"V Zvolene býva Mária."
+]
+},
+
+{
+id:"l3-25",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Jana a Eva sú kamarátky.",
+o:[
+"jana a Eva sú kamarátky.",
+"Jana a eva sú kamarátky.",
+"Jana a Eva sú kamarátky."
+]
+},
+
+{
+id:"l3-26",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Fido je Adamov pes.",
+o:[
+"fido je Adamov pes.",
+"Fido je adamov pes.",
+"Fido je Adamov pes."
+]
+},
+
+{
+id:"l3-27",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Prešov je na Slovensku.",
+o:[
+"prešov je na Slovensku.",
+"Prešov je na slovensku.",
+"Prešov je na Slovensku."
+]
+},
+
+{
+id:"l3-28",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Váh tečie cez Slovensko.",
+o:[
+"váh tečie cez Slovensko.",
+"Váh tečie cez slovensko.",
+"Váh tečie cez Slovensko."
+]
+},
+
+{
+id:"l3-29",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Sofia má mačku Belu.",
+o:[
+"sofia má mačku Belu.",
+"Sofia má mačku belu.",
+"Sofia má mačku Belu."
+]
+},
+
+{
+id:"l3-30",
+i:"Vyber správne napísanú vetu.",
+q:"",
+c:"Gerlach je vo Vysokých Tatrách.",
+o:[
+"gerlach je vo Vysokých Tatrách.",
+"Gerlach je vo vysokých Tatrách.",
+"Gerlach je vo Vysokých Tatrách."
+]
+}
+
+];
+
+
+/* =====================================================
+   PREMENNÉ
+===================================================== */
+
+let selectedLevel=1;
+let questions=[];
+let current=0;
+let score=0;
+let locked=false;
+let selectedAnswerIndex=0;
+
+const $=
+  id=>document.getElementById(id);
+
+
+/* =====================================================
+   NÁHODNÉ PORADIE
+===================================================== */
+
+function shuffle(array){
+
+  const a=[...array];
+
+  for(let i=a.length-1;i>0;i--){
+
+    const j=
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+    [a[i],a[j]]=
+    [a[j],a[i]];
+  }
+
+  return a;
+}
+
+
+/* =====================================================
+   LEVEL
+===================================================== */
+
+function source(){
+
+  if(selectedLevel===1){
+    return level1;
+  }
+
+  if(selectedLevel===2){
+    return level2;
+  }
+
+  return level3;
+}
+
+
+/* =====================================================
+   OBRAZOVKY
+===================================================== */
+
+function show(id){
+
+  [
+    "home",
+    "game",
+    "finish"
+  ]
+  .forEach(
+    name=>
+      $(name)
+      .classList
+      .add("hidden")
+  );
+
+  $(id)
+  .classList
+  .remove("hidden");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =====================================================
+   CHYBY
+===================================================== */
+
+function getMistakes(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        "damtoVlastneMenaV1"
+      ) || "{}"
+    );
+
+  }catch(error){
+
+    return {};
+  }
+}
+
+
+function setMistakes(data){
+
+  localStorage.setItem(
+    "damtoVlastneMenaV1",
+    JSON.stringify(data)
+  );
+
+  updateMistakeCount();
+}
+
+
+function updateMistakeCount(){
+
+  const count=
+    Object.keys(
+      getMistakes()
+    ).length;
+
+  $("mistakeCount")
+  .textContent=
+    " ("+count+")";
+}
+
+
+/* =====================================================
+   VÝBER LEVELU
+===================================================== */
+
+document
+.querySelectorAll(".level")
+.forEach(
+  button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        selectedLevel=
+          Number(
+            button.dataset.level
+          );
+
+        document
+        .querySelectorAll(".level")
+        .forEach(
+          item=>
+            item.classList
+            .remove("active")
+        );
+
+        button
+        .classList
+        .add("active");
+      }
+    );
+  }
+);
+
+
+/* =====================================================
+   TLAČIDLÁ
+===================================================== */
+
+$("startBtn")
+.addEventListener(
+  "click",
+  startTraining
+);
+
+$("mistakesBtn")
+.addEventListener(
+  "click",
+  startMistakeTraining
+);
+
+$("backBtn")
+.addEventListener(
+  "click",
+  ()=>show("home")
+);
+
+$("homeBtn")
+.addEventListener(
+  "click",
+  ()=>show("home")
+);
+
+$("againBtn")
+.addEventListener(
+  "click",
+  startTraining
+);
+
+$("nextButton")
+.addEventListener(
+  "click",
+  nextQuestion
+);
+
+
+/* =====================================================
+   ZAČAŤ TRÉNING
+===================================================== */
+
+function startTraining(){
+
+  const mistakes=
+    getMistakes();
+
+  const list=
+    source();
+
+  questions=[
+
+    ...shuffle(
+      list.filter(
+        x=>mistakes[x.id]
+      )
+    ),
+
+    ...shuffle(
+      list.filter(
+        x=>!mistakes[x.id]
+      )
+    )
+
+  ].slice(0,10);
+
+  current=0;
+  score=0;
+
+  show("game");
+
+  render();
+}
+
+
+/* =====================================================
+   PRECVIČIŤ CHYBY
+===================================================== */
+
+function startMistakeTraining(){
+
+  const mistakes=
+    getMistakes();
+
+  const all=[
+
+    ...level1,
+    ...level2,
+    ...level3
+
+  ].filter(
+    x=>mistakes[x.id]
+  );
+
+  if(!all.length){
+
+    alert(
+      "🎉 Nemáš žiadne chyby na precvičenie."
+    );
+
+    return;
+  }
+
+  questions=
+    shuffle(all)
+    .slice(0,10);
+
+  current=0;
+  score=0;
+
+  show("game");
+
+  render();
+}
+
+
+/* =====================================================
+   OTÁZKA
+===================================================== */
+
+function render(){
+
+  locked=false;
+
+  if(current>=questions.length){
+
+    finish();
+    return;
+  }
+
+  const x=
+    questions[current];
+
+  $("counter")
+  .textContent=
+    (current+1)
+    +" / "+
+    questions.length;
+
+  $("points")
+  .textContent=
+    score;
+
+  $("bar")
+  .style.width=
+    (
+      current /
+      questions.length *
+      100
+    )+"%";
+
+  $("levelBadge")
+  .textContent=
+
+    selectedLevel===1
+
+    ? "⭐ Skúšam"
+
+    : selectedLevel===2
+
+    ? "⭐⭐ Už mi to ide"
+
+    : "⭐⭐⭐ DámTo!";
+
+  $("instruction")
+  .textContent=
+    x.i;
+
+  $("question")
+  .textContent=
+    x.q || "";
+
+  $("feedback")
+  .innerHTML="";
+
+  $("feedback")
+  .className="";
+
+  $("nextButton")
+  .classList
+  .add("hidden");
+
+  const box=
+    $("answers");
+
+  box.innerHTML="";
+
+  selectedAnswerIndex=0;
+
+  const options=
+    shuffle(x.o);
+
+  options.forEach(
+    (option,index)=>{
+
+      const button=
+        document
+        .createElement("button");
+
+      button.className=
+        "answer";
+
+      button.textContent=
+        option;
+
+      button.dataset.correct=
+        String(
+          option===x.c
+        );
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          selectedAnswerIndex=
+            index;
+
+          updateKeyboardSelection();
+
+          checkAnswer(
+            option===x.c
+          );
+        }
+      );
+
+      box.appendChild(
+        button
+      );
+    }
+  );
+
+  updateKeyboardSelection();
+}
+
+
+/* =====================================================
+   ZVÝRAZNENIE VÝBERU
+===================================================== */
+
+function updateKeyboardSelection(){
+
+  const buttons=[
+    ...document
+    .querySelectorAll(".answer")
+  ];
+
+  buttons.forEach(
+    (button,index)=>
+
+      button
+      .classList
+      .toggle(
+        "keyboardSelected",
+        index===selectedAnswerIndex
+      )
+
+  );
+}
+
+
+/* =====================================================
+   KONTROLA
+===================================================== */
+
+function checkAnswer(ok){
+
+  if(locked){
+    return;
+  }
+
+  locked=true;
+
+  const x=
+    questions[current];
+
+  const mistakes=
+    getMistakes();
+
+  const feedback=
+    $("feedback");
+
+  if(ok){
+
+    score++;
+
+    delete mistakes[x.id];
+
+    feedback.className=
+      "feedback good";
+
+    feedback.innerHTML=
+      "🎉 <b>Výborne!</b> Správna odpoveď.";
+
+  }else{
+
+    mistakes[x.id]=true;
+
+    feedback.className=
+      "feedback bad";
+
+    feedback.innerHTML=
+      "❌ <b>Nesprávne.</b> Správna odpoveď je <b>"
+      +x.c+
+      "</b>.";
+  }
+
+  setMistakes(
+    mistakes
+  );
+
+  $("points")
+  .textContent=
+    score;
+
+  document
+  .querySelectorAll(".answer")
+  .forEach(
+    button=>
+      button.disabled=true
+  );
+
+  $("nextButton")
+  .classList
+  .remove("hidden");
+}
+
+
+/* =====================================================
+   ĎALŠIA OTÁZKA
+===================================================== */
+
+function nextQuestion(){
+
+  current++;
+
+  render();
+
+  window.scrollTo(0,0);
+}
+
+
+/* =====================================================
+   KLÁVESNICA
+===================================================== */
+
+document
+.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      $("game")
+      .classList
+      .contains("hidden")
+    ){
+      return;
+    }
+
+    const buttons=[
+      ...document
+      .querySelectorAll(".answer")
+    ];
+
+
+    /* PRED POTVRDENÍM */
+
+    if(
+      !locked &&
+      buttons.length
+    ){
+
+      if(
+        event.key==="ArrowDown" ||
+        event.key==="ArrowRight"
+      ){
+
+        event.preventDefault();
+
+        selectedAnswerIndex=
+          (
+            selectedAnswerIndex+1
+          )%
+          buttons.length;
+
+        updateKeyboardSelection();
+
+        return;
+      }
+
+
+      if(
+        event.key==="ArrowUp" ||
+        event.key==="ArrowLeft"
+      ){
+
+        event.preventDefault();
+
+        selectedAnswerIndex=
+          (
+            selectedAnswerIndex-1+
+            buttons.length
+          )%
+          buttons.length;
+
+        updateKeyboardSelection();
+
+        return;
+      }
+
+
+      if(
+        event.key==="Enter"
+      ){
+
+        event.preventDefault();
+
+        const chosen=
+          buttons[
+            selectedAnswerIndex
+          ];
+
+        if(chosen){
+
+          checkAnswer(
+            chosen.dataset.correct
+            ==="true"
+          );
+        }
+
+        return;
+      }
+    }
+
+
+    /* PO POTVRDENÍ */
+
+    if(
+      locked &&
+      event.key==="Enter" &&
+      !$("nextButton")
+      .classList
+      .contains("hidden")
+    ){
+
+      event.preventDefault();
+
+      nextQuestion();
+    }
+
+  }
+);
+
+
+/* =====================================================
+   KONIEC
+===================================================== */
+
+function finish(){
+
+  $("finalScore")
+  .textContent=
+    score+
+    " / "+
+    questions.length;
+
+  const percent=
+    questions.length
+
+    ? score/questions.length
+
+    : 0;
+
+  $("finalMessage")
+  .textContent=
+
+    percent===1
+
+    ? "Perfektné! Bez chyby. 🌟"
+
+    : percent>=0.8
+
+    ? "Výborne! 🚀"
+
+    : percent>=0.6
+
+    ? "Pekná práca. 💪"
+
+    : "Skús ešte jeden tréning. 🌱";
+
+  updateMistakeCount();
+
+  show("finish");
+}
+
+
+/* =====================================================
+   ŠTART
+===================================================== */
+
+updateMistakeCount();
+
+</script>
+
+</body>
+</html>
